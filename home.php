@@ -12,6 +12,7 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="container">
@@ -148,7 +149,7 @@
     </div>
   </div>
   </div>
-
+  
 
   <?php 
               error_reporting(0);
@@ -171,15 +172,32 @@
              
              
               $resultado = file_get_contents('https://restcountries.eu/rest/v2/region/'.$region."?fields=$f;$n;$c", false, $contexto);
-              $html = htmlspecialchars($resultado);
-              echo $html;
+              // $html = htmlspecialchars($resultado);
+              $search_results = json_decode($resultado, true);
+              
+
+              echo '<table style="width:100%">';
+              echo '<tr><td><strong>Nombre</strong></td><td><strong>Capital</strong></td><td><strong>Bandera</strong></td></tr>';   
+                foreach ($search_results as $atribute) {
+
+                  $n = $atribute["name"];
+                  $c = $atribute["capital"];
+                  $f = $atribute["flag"];
+                               
+                  echo '<tr><td>' . $n . '</td><td>' . $c . '</td><td><img src ="'.$f.'" style="width: 18rem; margin: auto;"/></td></tr>';
+                  // echo '<tr><td>' . $c . '</td></tr>';
+                  // echo '<tr><td>' .$f.'</td></tr>';
+                  // echo  '<svg src="'.$f.'"></svg>';
+                  }
+                
+                echo '</table>';
+              // echo $html;
                     }
                
              // $resultado = file_get_contents('https://restcountries.eu/rest/v2/region/europe?fields=name;capital;flag');
 
             
      ?>
-
 
 
 
